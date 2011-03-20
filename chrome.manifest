@@ -1,0 +1,3 @@
+content notfounder chrome/content/
+
+overlay chrome://browser/content/browser.xul chrome://notfounder/content/notfounder.xul

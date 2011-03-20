@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://notfounder/content/notfounder.css" type="text/css"?>
+
+<overlay id="hello-overlay"
+		 xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="notfounder.js" />
+  <statusbar id="status-bar">
+    <statusbarpanel id="not-founder-panel" label="Not Found " />
+  </statusbar>
+</overlay>
