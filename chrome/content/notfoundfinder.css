@@ -1,0 +1,21 @@
+toolbarbutton:hover {
+	cursor: pointer;
+}
+
+.warning {
+	font-weight: bold;
+	color: #ff0000;
+}
+
+#nff-console listitem {
+	color: #333333;
+}
+
+#nff-console listitem:hover {
+	font-weight: bold;
+	color: #000000;
+}
+
+#nff-console listcell {
+	padding-right: 0.5em;
+}

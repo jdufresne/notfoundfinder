@@ -105,6 +105,8 @@ NotFounderController.prototype = {
 			var row = window.document.createElement('listitem');
 			var item;
 
+			row.setAttribute('tooltiptext', request.URI.spec);
+
 			item = window.document.createElement('listcell');
 			item.setAttribute('label', request.URI.spec);
 			row.appendChild(item);

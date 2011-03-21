@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="chrome://notfounder/content/notfounder.css" type="text/css"?>
+<?xml-stylesheet href="chrome://notfoundfinder/content/notfoundfinder.css" type="text/css"?>
 
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script type="application/x-javascript" src="notfounder.js" />
+  <script type="application/x-javascript" src="notfoundfinder.js" />
   <vbox id="appcontent">
 	<splitter id="nff-splitter" />
 	<vbox id="nff-console" persist="height">
@@ -13,12 +13,17 @@
 		  <listheader label="Method" />
 		</listhead>
 		<listcols>
-		  <listcol flex="1"></listcol>
-		  <listcol flex="1"></listcol>
-		  <listcol flex="1"></listcol>
+		  <listcol flex="1" />
+		  <listcol />
+		  <listcol />
 		</listcols>
 	  </listbox>
-	  <button id="nff-clear-button" label="Clear" />
+	  <toolbar align="right">
+		<toolbarbutton id="nff-clear-button"
+					   label="Clear"
+					   icon="clear"
+					   tooltiptext="Clear results table" />
+	  </toolbar>
 	</vbox>
   </vbox>
   <statusbar id="status-bar" >

@@ -1,3 +1,3 @@
-content notfounder chrome/content/
+content notfoundfinder chrome/content/
 
-overlay chrome://browser/content/browser.xul chrome://notfounder/content/notfounder.xul
+overlay chrome://browser/content/browser.xul chrome://notfoundfinder/content/notfoundfinder.xul
