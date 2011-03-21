@@ -3,7 +3,25 @@
 
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script type="application/x-javascript" src="notfounder.js" />
+  <vbox id="appcontent">
+	<splitter id="nff-splitter" />
+	<vbox id="nff-console" persist="height">
+	  <listbox id="nff-request-table" flex="1">
+		<listhead>
+		  <listheader label="URI" />
+		  <listheader label="Status" />
+		  <listheader label="Method" />
+		</listhead>
+		<listcols>
+		  <listcol flex="1"></listcol>
+		  <listcol flex="1"></listcol>
+		  <listcol flex="1"></listcol>
+		</listcols>
+	  </listbox>
+	  <button id="nff-clear-button" label="Clear" />
+	</vbox>
+  </vbox>
   <statusbar id="status-bar" >
-    <statusbarpanel id="nff-status" label="Not Found" />
+    <statusbarpanel id="nff-status" type="button" label="Not Found" />
   </statusbar>
 </overlay>

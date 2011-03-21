@@ -48,12 +48,27 @@ function NotFounderController() {
 }
 
 NotFounderController.prototype = {
-	window: null,
+	observer: null,
 
 	init: function() {
 		var self = this;
+
+		var console = document.getElementById('nff-console');
+		var splitter = document.getElementById('nff-splitter');
+		console.collapsed = true;
+		splitter.collapsed = true;
+
 		var status = document.getElementById('nff-status');
-		status.addEventListener('click', function() { self.openWindow(); }, false);
+		status.addEventListener('click', function() {
+			self.toggleConsole();
+		}, false);
+
+		var button = document.getElementById('nff-clear-button');
+		button.addEventListener('command', function() {
+			self.observer.clearRequests();
+			self.update();
+		}, false);
+
 		this.observer = new NotFounder();
 		this.observer.setUpdateCallback(function() { self.update(); });
 	},
@@ -65,71 +80,43 @@ NotFounderController.prototype = {
 	update: function() {
 		var status = document.getElementById('nff-status');
 		var num = this.observer.requests.length;
-		status.label = "Not Found (" + num + ")";
-
+		status.label = "Not Found";
 		if (num) {
+			status.label += " (" + num + ")";
 		 	status.setAttribute('class', 'warning');
 		} else {
 			status.removeAttribute('class');
 		}
 
-		if (this.window) {
-			this.updateWindow();
-		}
-	},
-
-	openWindow: function() {
-		this.window = window.open(
-			'chrome://notfounder/content/window.xul',
-			'requests',
-			'chrome,centerscreen'
-		);
-
-		var self = this;
-		this.window.addEventListener('load', function() {
-			var button = self.window.document.getElementById('nff-clear-button');
-			button.addEventListener('command', function() {
-				self.observer.clearRequests();
-				self.update();
-			}, false);
-			self.updateWindow();
-		}, false);
-		this.window.addEventListener('close', function() {
-			self.window = null;
-		}, false);
-	},
-
-	updateWindow: function() {
-		var table = this.window.document.getElementById('nff-request-table');
+		var table = window.document.getElementById('nff-request-table');
 		var nodes = [];
-
 		for (var i = 0; i < table.childNodes.length; i++) {
-			if (table.childNodes[i].nodeName == 'listitem') {
+			var node = table.childNodes[i];
+			if (node.nodeType == node.ELEMENT_NODE &&
+				node.nodeName == 'listitem') {
 				nodes.push(table.childNodes[i]);
 			}
 		}
-
 		while (nodes.length) {
 			table.removeChild(nodes.pop());
 		}
-
 		for (var i = 0; i < this.observer.requests.length; i++) {
 			var request = this.observer.requests[i];
-			var row = this.window.document.createElement('listitem');
+			var row = window.document.createElement('listitem');
 			var item;
 
-			item = this.window.document.createElement('listcell');
+			item = window.document.createElement('listcell');
 			item.setAttribute('label', request.URI.spec);
 			row.appendChild(item);
 
-			item = this.window.document.createElement('listcell');
+			item = window.document.createElement('listcell');
 			item.setAttribute(
 				'label',
 				request.responseStatus + " " + request.responseStatusText
 			);
 			row.appendChild(item);
 
-			item = this.window.document.createElement('listcell');
+			item = window.document.createElement('listcell');
 			item.setAttribute(
 				'label',
 				request.requestMethod
@@ -138,6 +125,13 @@ NotFounderController.prototype = {
 
 			table.appendChild(row);
 		}
+	},
+
+	toggleConsole: function() {
+		var console = document.getElementById('nff-console');
+		var splitter = document.getElementById('nff-splitter');
+		console.collapsed = !console.collapsed;
+		splitter.collapsed = console.collapsed;
 	},
 }
 
