@@ -16,7 +16,8 @@ NotFounder.prototype = {
 
 	observe: function(request, topic, data) {
 		request.QueryInterface(Components.interfaces.nsIHttpChannel);
-		if (request.responseStatus != 200) {
+		var status = Math.floor(request.responseStatus / 100);
+		if (status == 4 || status == 5) {
 			this.requests.push(request);
 			if (this.updateCallback) {
 				this.updateCallback();
