@@ -9,6 +9,14 @@
   <vbox id="appcontent">
 	<splitter id="nff-splitter" />
 	<vbox id="nff-console" persist="height">
+	  <toolbar align="right">
+		<toolbarbutton id="nff-clear-button"
+					   label="&clear;"
+					   icon="clear" />
+		<toolbarbutton id="nff-close-button"
+					   label="&close;"
+					   icon="close" />
+	  </toolbar>
 	  <listbox id="nff-request-table" flex="1">
 		<listhead>
 		  <listheader label="&uri;" />
@@ -21,11 +29,6 @@
 		  <listcol />
 		</listcols>
 	  </listbox>
-	  <toolbar align="right">
-		<toolbarbutton id="nff-clear-button"
-					   label="&clear;"
-					   icon="clear" />
-	  </toolbar>
 	</vbox>
   </vbox>
   <statusbar id="status-bar" >

@@ -54,20 +54,22 @@ NotFounderController.prototype = {
 	init: function() {
 		var self = this;
 
-		var console = document.getElementById('nff-console');
-		var splitter = document.getElementById('nff-splitter');
-		console.collapsed = true;
-		splitter.collapsed = true;
+		this.setConsoleCollapsed(true);
 
 		var status = document.getElementById('nff-status');
 		status.addEventListener('click', function() {
 			self.toggleConsole();
 		}, false);
 
-		var button = document.getElementById('nff-clear-button');
+		var button;
+		button = document.getElementById('nff-clear-button');
 		button.addEventListener('command', function() {
 			self.observer.clearRequests();
 			self.update();
+		}, false);
+		button = document.getElementById('nff-close-button');
+		button.addEventListener('command', function() {
+			self.setConsoleCollapsed(true);
 		}, false);
 
 		this.observer = new NotFounder();
@@ -130,11 +132,16 @@ NotFounderController.prototype = {
 		}
 	},
 
-	toggleConsole: function() {
+	setConsoleCollapsed: function(collapsed) {
 		var console = document.getElementById('nff-console');
 		var splitter = document.getElementById('nff-splitter');
-		console.collapsed = !console.collapsed;
-		splitter.collapsed = console.collapsed;
+		console.collapsed = collapsed;
+		splitter.collapsed = collapsed;
+	},
+
+	toggleConsole: function() {
+		var console = document.getElementById('nff-console');
+		this.setConsoleCollapsed(!console.collapsed);
 	},
 }
 
