@@ -1,148 +1,148 @@
 function NotFounder() {
-	this.register();
+    this.register();
 }
 
 NotFounder.prototype = {
-	requests: [],
-	updateCallback: null,
+    requests: [],
+    updateCallback: null,
 
-	setUpdateCallback: function(callback) {
-		this.updateCallback = callback;
-	},
+    setUpdateCallback: function(callback) {
+        this.updateCallback = callback;
+    },
 
-	clearRequests: function() {
-		this.requests = [];
-	},
+    clearRequests: function() {
+        this.requests = [];
+    },
 
-	observe: function(request, topic, data) {
-		request.QueryInterface(Components.interfaces.nsIHttpChannel);
-		var status = Math.floor(request.responseStatus / 100);
-		if (status == 4 || status == 5) {
-			this.requests.push(request);
-			if (this.updateCallback) {
-				this.updateCallback();
-			}
-		}
-	},
+    observe: function(request, topic, data) {
+        request.QueryInterface(Components.interfaces.nsIHttpChannel);
+        var status = Math.floor(request.responseStatus / 100);
+        if (status == 4 || status == 5) {
+            this.requests.push(request);
+            if (this.updateCallback) {
+                this.updateCallback();
+            }
+        }
+    },
 
-	register: function() {
-		var observerService = this._getObserverService();
-		observerService.addObserver(this, 'http-on-examine-response', false);
-	},
+    register: function() {
+        var observerService = this._getObserverService();
+        observerService.addObserver(this, 'http-on-examine-response', false);
+    },
 
-	unregister: function() {
-		var observerService = this._getObserverService();
-		observerService.removeObserver(this, 'http-on-examine-response');
-	},
+    unregister: function() {
+        var observerService = this._getObserverService();
+        observerService.removeObserver(this, 'http-on-examine-response');
+    },
 
-	_getObserverService: function() {
-		return Components.classes['@mozilla.org/observer-service;1']
-			.getService(Components.interfaces.nsIObserverService);
-	},
+    _getObserverService: function() {
+        return Components.classes['@mozilla.org/observer-service;1']
+            .getService(Components.interfaces.nsIObserverService);
+    },
 };
 
 
 function NotFounderController() {
-	var self = this;
-	window.addEventListener('load', function() { self.init(); }, false);
-	window.addEventListener('unload', function() { self.shutdown(); }, false);
+    var self = this;
+    window.addEventListener('load', function() { self.init(); }, false);
+    window.addEventListener('unload', function() { self.shutdown(); }, false);
 }
 
 NotFounderController.prototype = {
-	observer: null,
+    observer: null,
 
-	init: function() {
-		var self = this;
+    init: function() {
+        var self = this;
 
-		this.setConsoleCollapsed(true);
+        this.setConsoleCollapsed(true);
 
-		var status = document.getElementById('nff-status');
-		status.addEventListener('click', function() {
-			self.toggleConsole();
-		}, false);
+        var status = document.getElementById('nff-status');
+        status.addEventListener('click', function() {
+            self.toggleConsole();
+        }, false);
 
-		var button;
-		button = document.getElementById('nff-clear-button');
-		button.addEventListener('command', function() {
-			self.observer.clearRequests();
-			self.update();
-		}, false);
-		button = document.getElementById('nff-close-button');
-		button.addEventListener('command', function() {
-			self.setConsoleCollapsed(true);
-		}, false);
+        var button;
+        button = document.getElementById('nff-clear-button');
+        button.addEventListener('command', function() {
+            self.observer.clearRequests();
+            self.update();
+        }, false);
+        button = document.getElementById('nff-close-button');
+        button.addEventListener('command', function() {
+            self.setConsoleCollapsed(true);
+        }, false);
 
-		this.observer = new NotFounder();
-		this.observer.setUpdateCallback(function() { self.update(); });
-	},
+        this.observer = new NotFounder();
+        this.observer.setUpdateCallback(function() { self.update(); });
+    },
 
-	shutdown: function() {
-		this.observer.unregister();
-	},
+    shutdown: function() {
+        this.observer.unregister();
+    },
 
-	update: function() {
-		var status = document.getElementById('nff-status');
-		var num = this.observer.requests.length;
-		status.label = "Not Found";
-		if (num) {
-			status.label += " (" + num + ")";
-		 	status.setAttribute('class', 'nff-warning');
-		} else {
-			status.removeAttribute('class');
-		}
+    update: function() {
+        var status = document.getElementById('nff-status');
+        var num = this.observer.requests.length;
+        status.label = "Not Found";
+        if (num) {
+            status.label += " (" + num + ")";
+             status.setAttribute('class', 'nff-warning');
+        } else {
+            status.removeAttribute('class');
+        }
 
-		var table = window.document.getElementById('nff-request-table');
-		var nodes = [];
-		for (var i = 0; i < table.childNodes.length; i++) {
-			var node = table.childNodes[i];
-			if (node.nodeType == node.ELEMENT_NODE &&
-				node.nodeName == 'listitem') {
-				nodes.push(table.childNodes[i]);
-			}
-		}
-		while (nodes.length) {
-			table.removeChild(nodes.pop());
-		}
-		for (var i = 0; i < this.observer.requests.length; i++) {
-			var request = this.observer.requests[i];
-			var row = window.document.createElement('listitem');
-			var item;
+        var table = window.document.getElementById('nff-request-table');
+        var nodes = [];
+        for (var i = 0; i < table.childNodes.length; i++) {
+            var node = table.childNodes[i];
+            if (node.nodeType == node.ELEMENT_NODE &&
+                node.nodeName == 'listitem') {
+                nodes.push(table.childNodes[i]);
+            }
+        }
+        while (nodes.length) {
+            table.removeChild(nodes.pop());
+        }
+        for (var i = 0; i < this.observer.requests.length; i++) {
+            var request = this.observer.requests[i];
+            var row = window.document.createElement('listitem');
+            var item;
 
-			row.setAttribute('tooltiptext', request.URI.spec);
+            row.setAttribute('tooltiptext', request.URI.spec);
 
-			item = window.document.createElement('listcell');
-			item.setAttribute('label', request.URI.spec);
-			row.appendChild(item);
+            item = window.document.createElement('listcell');
+            item.setAttribute('label', request.URI.spec);
+            row.appendChild(item);
 
-			item = window.document.createElement('listcell');
-			item.setAttribute(
-				'label',
-				request.responseStatus + " " + request.responseStatusText
-			);
-			row.appendChild(item);
+            item = window.document.createElement('listcell');
+            item.setAttribute(
+                'label',
+                request.responseStatus + " " + request.responseStatusText
+            );
+            row.appendChild(item);
 
-			item = window.document.createElement('listcell');
-			item.setAttribute(
-				'label',
-				request.requestMethod
-			);
-			row.appendChild(item);
+            item = window.document.createElement('listcell');
+            item.setAttribute(
+                'label',
+                request.requestMethod
+            );
+            row.appendChild(item);
 
-			table.appendChild(row);
-		}
-	},
+            table.appendChild(row);
+        }
+    },
 
-	setConsoleCollapsed: function(collapsed) {
-		var console = document.getElementById('nff-console');
-		var splitter = document.getElementById('nff-splitter');
-		console.collapsed = collapsed;
-		splitter.collapsed = collapsed;
-	},
+    setConsoleCollapsed: function(collapsed) {
+        var console = document.getElementById('nff-console');
+        var splitter = document.getElementById('nff-splitter');
+        console.collapsed = collapsed;
+        splitter.collapsed = collapsed;
+    },
 
-	toggleConsole: function() {
-		var console = document.getElementById('nff-console');
-		this.setConsoleCollapsed(!console.collapsed);
-	},
+    toggleConsole: function() {
+        var console = document.getElementById('nff-console');
+        this.setConsoleCollapsed(!console.collapsed);
+    },
 }
 
 

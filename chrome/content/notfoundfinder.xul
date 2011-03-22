@@ -7,30 +7,25 @@
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script type="application/x-javascript" src="notfoundfinder.js" />
   <vbox id="appcontent">
-	<splitter id="nff-splitter" />
-	<vbox id="nff-console" persist="height">
-	  <toolbar align="right">
-		<toolbarbutton id="nff-clear-button"
-					   class="toolbarbutton-icon-clear"
-					   label="&clear;" />
-
-		<toolbarbutton id="nff-close-button"
-					   class="toolbarbutton-icon-clear"
-					   label="&close;" />
-	  </toolbar>
-	  <listbox id="nff-request-table" flex="1">
-		<listhead>
-		  <listheader label="&uri;" />
-		  <listheader label="&status;" />
-		  <listheader label="&method;" />
-		</listhead>
-		<listcols>
-		  <listcol flex="1" />
-		  <listcol />
-		  <listcol />
-		</listcols>
-	  </listbox>
-	</vbox>
+    <splitter id="nff-splitter" />
+    <vbox id="nff-console" persist="height">
+      <toolbar align="right">
+        <toolbarbutton id="nff-clear-button" label="&clear;" />
+        <toolbarbutton id="nff-close-button" label="&close;" />
+      </toolbar>
+      <listbox id="nff-request-table" flex="1">
+        <listhead>
+          <listheader label="&uri;" />
+          <listheader label="&status;" />
+          <listheader label="&method;" />
+        </listhead>
+        <listcols>
+          <listcol flex="1" />
+          <listcol />
+          <listcol />
+        </listcols>
+      </listbox>
+    </vbox>
   </vbox>
   <statusbar id="status-bar" >
     <statusbarpanel id="nff-status" type="button" label="&notfound;" />
