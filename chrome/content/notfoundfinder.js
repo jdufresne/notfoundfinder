@@ -86,7 +86,7 @@ NotFounderController.prototype = {
 		status.label = "Not Found";
 		if (num) {
 			status.label += " (" + num + ")";
-		 	status.setAttribute('class', 'warning');
+		 	status.setAttribute('class', 'nff-warning');
 		} else {
 			status.removeAttribute('class');
 		}

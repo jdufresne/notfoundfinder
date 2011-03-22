@@ -11,11 +11,12 @@
 	<vbox id="nff-console" persist="height">
 	  <toolbar align="right">
 		<toolbarbutton id="nff-clear-button"
-					   label="&clear;"
-					   icon="clear" />
+					   class="toolbarbutton-icon-clear"
+					   label="&clear;" />
+
 		<toolbarbutton id="nff-close-button"
-					   label="&close;"
-					   icon="close" />
+					   class="toolbarbutton-icon-clear"
+					   label="&close;" />
 	  </toolbar>
 	  <listbox id="nff-request-table" flex="1">
 		<listhead>
