@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?xml-stylesheet href="chrome://notfoundfinder/content/notfoundfinder.css" type="text/css"?>
+
+<!DOCTYPE overlay SYSTEM "chrome://notfoundfinder/locale/notfoundfinder.dtd">
 
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script type="application/x-javascript" src="notfoundfinder.js" />
@@ -8,9 +11,9 @@
 	<vbox id="nff-console" persist="height">
 	  <listbox id="nff-request-table" flex="1">
 		<listhead>
-		  <listheader label="URI" />
-		  <listheader label="Status" />
-		  <listheader label="Method" />
+		  <listheader label="&uri;" />
+		  <listheader label="&status;" />
+		  <listheader label="&method;" />
 		</listhead>
 		<listcols>
 		  <listcol flex="1" />
@@ -20,13 +23,12 @@
 	  </listbox>
 	  <toolbar align="right">
 		<toolbarbutton id="nff-clear-button"
-					   label="Clear"
-					   icon="clear"
-					   tooltiptext="Clear results table" />
+					   label="&clear;"
+					   icon="clear" />
 	  </toolbar>
 	</vbox>
   </vbox>
   <statusbar id="status-bar" >
-    <statusbarpanel id="nff-status" type="button" label="Not Found" />
+    <statusbarpanel id="nff-status" type="button" label="&notfound;" />
   </statusbar>
 </overlay>
